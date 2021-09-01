@@ -12,21 +12,12 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "element-ui": "^2.4.5",
     "qs": "^6.10.1",
     "screenfull": "^5.1.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged",
-    "commit-msg": "commitlint -E GIT_PARAMS"
-  },
-  "lint-staged": {
-    "src/**/*.{js,vue}": [
-      "vue-cli-service lint",
-      "git add"
-    ]
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
@@ -48,7 +39,20 @@
     "less": "^4.1.1",
     "less-loader": "7.2.0",
     "lint-staged": "^11.0.0",
+    "node-sass": "^4.9.2",
+    "sass-loader": "^7.0.3",
+    "vue-cli-plugin-element": "~1.0.1",
     "vue-template-compiler": "^2.6.11",
     "webpack-bundle-analyzer": "^4.4.2"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged",
+    "commit-msg": "commitlint -E GIT_PARAMS"
+  },
+  "lint-staged": {
+    "src/**/*.{js,vue}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
   }
 }

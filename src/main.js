@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import './router/routerGuard'
 import components from './components/index'
+import './plugins/element.js'
 
 Vue.use(components)
 
