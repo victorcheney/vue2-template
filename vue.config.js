@@ -1,6 +1,8 @@
-// const path = require('path')
-// const webpack = require('webpack')
+const path = require('path')
+const webpack = require('webpack')
 const CompressionPlugin = require('compression-webpack-plugin')
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
+const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin')
 
 // const resolve = dir => path.join(__dirname, dir)
 
@@ -35,6 +37,44 @@ const config = {
           .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
       }
     }
+
+    // 打包速度插件
+    config.plugin('speed')
+      .use(SpeedMeasurePlugin)
+
+    // 引用dll文件
+    config.plugin('vendorDll1')
+      .use(webpack.DllReferencePlugin, [
+        {
+          context: __dirname,
+          manifest: require('./public/vender/other_vendor.manifest.json')
+        }
+      ])
+
+    config.plugin('vendorDll2')
+      .use(webpack.DllReferencePlugin, [
+        {
+          context: __dirname,
+          manifest: require('./public/vender/vue_vendor.manifest.json')
+        }
+      ])
+
+    // 将dll下的文件自动插入到index.html中
+    config.plugin('asset')
+      .use(AddAssetHtmlWebpackPlugin, [
+        [
+          {
+            filepath: path.resolve(__dirname, 'public/vender/vue_vendor.dll.js'),
+            outputPath: 'vender',
+            publicPath: '/vender'
+          },
+          {
+            filepath: path.resolve(__dirname, 'public/vender/other_vendor.dll.js'),
+            outputPath: 'vender',
+            publicPath: '/vender'
+          }
+        ]
+      ])
   },
   // 打包时不生成.map文件, 测试环境使用 npm run preproduct 命令，生成带sourceMap的打包文件
   productionSourceMap: process.env.npm_lifecycle_event === 'preproduct',
