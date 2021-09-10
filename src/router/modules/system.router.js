@@ -3,7 +3,7 @@
  * @Author: chenfengtao
  * @Date: 2021-06-30 16:22:15
  * @LastEditors: chenfengtao
- * @LastEditTime: 2021-07-06 17:15:26
+ * @LastEditTime: 2021-09-10 15:44:24
  */
 
 /**
@@ -13,7 +13,8 @@ const routes = {
   name: 'system',
   path: '/system',
   meta: {
-    auth: true
+    auth: true,
+    roles: ['admin']
   },
   component: () => import('@/views/System')
 }

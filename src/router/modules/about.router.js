@@ -3,16 +3,19 @@
  * @Author: chenfengtao
  * @Date: 2021-06-30 16:22:15
  * @LastEditors: chenfengtao
- * @LastEditTime: 2021-07-06 15:04:04
+ * @LastEditTime: 2021-09-09 17:03:32
  */
 
 /**
  * @type {import('vue-router').RouteConfig}
  */
 const routes = {
-  name: 'login',
-  path: '/login',
-  component: () => import('@/views/Login')
+  path: '/about',
+  name: 'About',
+  component: () => import('@/views/About.vue'),
+  meta: {
+    roles: ['user']
+  }
 }
 
 export default routes

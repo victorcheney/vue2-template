@@ -29,52 +29,52 @@ const config = {
   },
   chainWebpack: config => {
     // 生产环境
-    if (process.env.NODE_ENV === 'production') {
+    if (isProd) {
       // webpack打包分析
       if (process.env.npm_lifecycle_event === 'analyze') {
         config
           .plugin('webpack-bundle-analyzer')
           .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
       }
-    }
 
-    // 打包速度插件
-    config.plugin('speed')
-      .use(SpeedMeasurePlugin)
+      // 打包速度插件
+      config.plugin('speed')
+        .use(SpeedMeasurePlugin)
 
-    // 引用dll文件
-    config.plugin('vendorDll1')
-      .use(webpack.DllReferencePlugin, [
-        {
-          context: __dirname,
-          manifest: require('./public/vender/other_vendor.manifest.json')
-        }
-      ])
-
-    config.plugin('vendorDll2')
-      .use(webpack.DllReferencePlugin, [
-        {
-          context: __dirname,
-          manifest: require('./public/vender/vue_vendor.manifest.json')
-        }
-      ])
-
-    // 将dll下的文件自动插入到index.html中
-    config.plugin('asset')
-      .use(AddAssetHtmlWebpackPlugin, [
-        [
+      // 引用dll文件
+      config.plugin('vendorDll1')
+        .use(webpack.DllReferencePlugin, [
           {
-            filepath: path.resolve(__dirname, 'public/vender/vue_vendor.dll.js'),
-            outputPath: 'vender',
-            publicPath: '/vender'
-          },
-          {
-            filepath: path.resolve(__dirname, 'public/vender/other_vendor.dll.js'),
-            outputPath: 'vender',
-            publicPath: '/vender'
+            context: __dirname,
+            manifest: require('./public/vender/other_vendor.manifest.json')
           }
-        ]
-      ])
+        ])
+
+      config.plugin('vendorDll2')
+        .use(webpack.DllReferencePlugin, [
+          {
+            context: __dirname,
+            manifest: require('./public/vender/vue_vendor.manifest.json')
+          }
+        ])
+
+      // 将dll下的文件自动插入到index.html中
+      config.plugin('asset')
+        .use(AddAssetHtmlWebpackPlugin, [
+          [
+            {
+              filepath: path.resolve(__dirname, 'public/vender/vue_vendor.dll.js'),
+              outputPath: 'vender',
+              publicPath: '/vender'
+            },
+            {
+              filepath: path.resolve(__dirname, 'public/vender/other_vendor.dll.js'),
+              outputPath: 'vender',
+              publicPath: '/vender'
+            }
+          ]
+        ])
+    }
   },
   // 打包时不生成.map文件, 测试环境使用 npm run preproduct 命令，生成带sourceMap的打包文件
   productionSourceMap: process.env.npm_lifecycle_event === 'preproduct',
@@ -105,7 +105,7 @@ const config = {
     sockHost: 'http://127.0.0.1:8080/',
     proxy: {
       [process.env.VUE_APP_BASE_URL]: {
-        target: 'http://192.168.20.19:8080/',
+        target: 'https://www.fastmock.site/mock/a6e335bcf7b2284086aab6fb65b8efd4/victor',
         ws: true,
         changeOrigin: true,
         pathRewrite: {

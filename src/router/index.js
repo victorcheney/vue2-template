@@ -11,24 +11,26 @@ rst.keys().forEach(item => {
 
 Vue.use(VueRouter)
 
-const routes = [
+// export 需要动态添加的模块路由
+export const asyncRoutes = moduleRoutes
+
+export const constantRoutes = [
   {
     path: '/',
     name: 'Home',
     component: Home
   },
-  ...moduleRoutes,
   {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue')
+    name: 'login',
+    path: '/login',
+    component: () => import('@/views/Login')
   }
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes: constantRoutes
 })
 
 export default router
